@@ -11,7 +11,6 @@ public class Search {
 		{			
 			Search t = new Search();
 			t.startSearch("Java*");
-			
 			String pattern = ("*.java");
 			PathMatcher matcher =
 			    FileSystems.getDefault().getPathMatcher("glob:" + pattern);
