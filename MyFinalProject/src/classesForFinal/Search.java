@@ -1,75 +1,40 @@
 package classesForFinal;
 
-import java.nio.file.*;
-import java.io.*;
-import java.nio.file.attribute.*;
+import java.io.File;
+
+import javax.swing.DefaultListModel;
 
 public class Search {
-
-	public static void main(String[] args) throws IOException
-	{
-		{			
-			Search t = new Search();
-			t.startSearch("Java*");
-			String pattern = ("*.java");
-			PathMatcher matcher =
-			    FileSystems.getDefault().getPathMatcher("glob:" + pattern);
-			System.out.println(matcher);
-		}
-	}
 	
-	public PathMatcher testingShit(String pat)
-	{
-		PathMatcher matcher =
-			    FileSystems.getDefault().getPathMatcher("glob:" + pat);
-		return matcher;
-	}
-	public void startSearch(String toFind) throws IOException // Files.walkFileTree doesn't work without the throw
-	{
-			Path startingDir = Paths.get("C:\\Users\\smithm19\\My Documents");
-			String pattern = toFind;
-			Finder testFind = new Finder(pattern);
-			Files.walkFileTree(startingDir, testFind);
-	}
+	void createArrayList(File base, String itemToSearch,DefaultListModel listCreationData ) throws InterruptedException {
 
-	public static class Finder extends SimpleFileVisitor<Path> {
-
-		private final FileVisitResult CONTINUE = null; // constant
-																// variable from
-																// SimpleVisitResult
-		private PathMatcher match;
-		private int numMatches = 0; // record number of matches
-
-		Finder(String test) {
-			match = FileSystems.getDefault().getPathMatcher("glob:" + test);
-		}
-
-		Path find(Path file) {
-			Path name = file.getFileName();
-			if (name != null && match.matches(name)) {
-				numMatches++;
-				System.out.println(file);
-				return file;
-			}
-			return null;
-		}
 		
+		
+		File root = null;
+		root = base;
+		File[] files = root.listFiles();
+		String match = itemToSearch.toLowerCase();
+		if (files!= null){
+		for (int i = 0; i < files.length; i++)
+		{
+			String fileName = files[i].getName();
 
-		void results() {
-			System.out.println(numMatches + " Matches");
+			// Searches
+			
+			if (fileName.toLowerCase().startsWith(match)) {
+				listCreationData.addElement(files[i]);
+			}
+
+			else if (fileName.toLowerCase().endsWith(match)) {
+				listCreationData.addElement(files[i]);
+			}
+
+			if (files[i].isDirectory()) {
+			 	System.out.println(files[i]);
+				createArrayList(files[i],itemToSearch,listCreationData);
+			}
 		}
-
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-			find(file);
-			return CONTINUE;
 		}
-
-		public FileVisitResult preVisitDirectory(Path dir,
-				BasicFileAttributes attrs) {
-			find(dir);
-			return CONTINUE;
-		}
-
 	}
-	
+
 }
