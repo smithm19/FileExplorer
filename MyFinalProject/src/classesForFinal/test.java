@@ -16,9 +16,11 @@ public class test {
 	}
 	void testSearch2() throws InterruptedException{				//Search all files for tester
 		Search tester = new Search();								//will get all results from the first, plus other types of files
+		FileExplorerGUI testerGUI = new FileExplorerGUI();
 		DefaultListModel testerData = new DefaultListModel();
 		File testerFile = new File("C:\\Users\\smithm19\\Documents");
 		tester.createArrayList(testerFile, "tester", testerData);
+		
 		System.out.println(testerData);
 	}
 	void testSearch3() throws InterruptedException{				//Search all files for cOD, to make sure case is not affecting the search
@@ -27,6 +29,10 @@ public class test {
 		File testerFile = new File("C:\\Users\\smithm19\\Documents");
 		tester.createArrayList(testerFile, "cOD", testerData);
 		System.out.println(testerData);
+	}
+	
+	void testSomething1(){
+		
 	}
 	
 	public static void main(String[] args) {
